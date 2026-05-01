@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList
@@ -12,7 +12,7 @@ import {
   ChevronRight, ChevronLeft, Award, TrendingUp, Info, Search, 
   Home, Video, LayoutGrid, ClipboardList, Lightbulb, CheckCircle,
   Users, ShoppingCart, Zap, Fuel, GraduationCap, Flag, Crown, RefreshCcw,
-  HelpCircle
+  HelpCircle, Trophy
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -510,28 +510,52 @@ export default function App() {
         </SlideContainer>
       )
     },
-    // 9. Platforms Analysis
+    // 9. Geographic Interest
     {
       id: 9,
-      title: "تحليل سلوك المنصات",
-      icon: <LayoutGrid />,
+      title: "توزيع الاهتمام حسب المناطق",
+      icon: <Flag />,
       content: (
         <SlideContainer>
-           <div className="bg-white rounded-3xl border overflow-hidden shadow-sm flex-1">
-              <table className="w-full text-[10px] md:text-xs text-right">
-                <thead className="bg-saudi-green text-white">
-                  <tr><th className="p-3">المنصة</th><th className="p-3">اللغة</th><th className="p-3">نمط البحث</th></tr>
-                </thead>
-                <tbody className="divide-y">
-                  <tr><td className="p-3 font-bold">بحث الويب</td><td className="p-3">🇸🇦 العربية</td><td className="p-3">استكشاف عام ومعرفة</td></tr>
-                  <tr><td className="p-3 font-bold">الأخبار</td><td className="p-3">🇸🇦 العربية</td><td className="p-3">متابعة القرارات الرسمية</td></tr>
-                  <tr><td className="p-3 font-bold">يوتيوب</td><td className="p-3">🇸🇦 العربية</td><td className="p-3">شروحات وتطبيق عملي</td></tr>
-                  <tr><td className="p-3 font-bold">شوبينق</td><td className="p-3">🇸🇦 العربية</td><td className="p-3">مقارنة الأسعار والعروض</td></tr>
-                </tbody>
-              </table>
+           <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm flex-1 flex flex-col md:flex-row">
+              <div className="flex-1 p-4 bg-saudi-green/5">
+                 <h4 className="font-black text-saudi-green text-xs mb-3 flex items-center gap-2"><Search size={14}/> المناطق الأكثر تفاعلاً</h4>
+                 <div className="space-y-3">
+                    {[
+                      { region: "منطقة الرياض", percentage: 100, trend: "عالي جداً" },
+                      { region: "منطقة مكة المكرمة", percentage: 92, trend: "عالي" },
+                      { region: "المنطقة الشرقية", percentage: 85, trend: "مستقر" },
+                      { region: "منطقة عسير", percentage: 74, trend: "متزايد" }
+                    ].map((item, i) => (
+                      <div key={i} className="space-y-1">
+                        <div className="flex justify-between text-[10px] font-bold">
+                          <span>{item.region}</span>
+                          <span className="text-saudi-gold">{item.percentage}%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: `${item.percentage}%` }}
+                            transition={{ duration: 1.5, delay: i * 0.2 }}
+                            className="h-full bg-saudi-green"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                 </div>
+              </div>
+              <div className="w-full md:w-1/3 p-4 bg-white border-r border-gray-100 flex flex-col justify-center">
+                 <div className="text-center">
+                    <div className="text-3xl font-black text-saudi-gold mb-1">الرياض</div>
+                    <p className="text-[10px] text-saudi-green font-bold">المدينة الأكثر بحثاً عن "حاسبة الضريبة"</p>
+                    <div className="mt-4 p-2 bg-saudi-green/5 rounded-xl text-[9px] text-gray-500 italic">
+                      "يرتبط التفاعل طردياً مع الكثافة السكانية والنشاط التجاري في العاصمة"
+                    </div>
+                 </div>
+              </div>
            </div>
            <div className="bg-saudi-gold/10 p-3 rounded-2xl border-r-4 border-saudi-gold text-[10px] font-bold text-saudi-green">
-             💡 هيمنة اللغة العربية تعكس الثقة العالية في المحتوى الوطني والاهتمام الشعبي الواسع باللغة الأم في القضايا الاقتصادية.
+             💡 التباين الجغرافي يوضح حاجة المناطق الإدارية الكبرى لرسائل اتصالية مكثفة حول تعديلات القوانين المالية.
            </div>
         </SlideContainer>
       )
